@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
-  const { title, description, price, category, images } = product;
+  const { id, title, description, price, category, images } = product;
 
   return (
-    <div className="group bg-gradient-to-b from-white to-amber-50 border border-stone-200 border-t-2 border-t-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col">
+    <Link to={`/product/${id}`} className="group bg-gradient-to-b from-white to-amber-50 border border-stone-200 border-t-2 border-t-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col cursor-pointer block">
 
       {/* Image — framed like a photo */}
       <div className="h-[200px] overflow-hidden relative bg-stone-100">
@@ -43,13 +44,16 @@ const ProductCard = ({ product }) => {
             ${price.toFixed(2)}
           </span>
 
-          <button className="bg-gradient-to-b from-stone-700 to-stone-900 text-white text-[13px] font-medium px-4 py-2 rounded-xl shadow-md hover:shadow-inner hover:from-stone-800 hover:to-stone-950 active:scale-95 transition-all duration-150 cursor-pointer">
+          <button 
+            onClick={(e) => e.preventDefault()}
+            className="bg-gradient-to-b from-stone-700 to-stone-900 text-white text-[13px] font-medium px-4 py-2 rounded-xl shadow-md hover:shadow-inner hover:from-stone-800 hover:to-stone-950 active:scale-95 transition-all duration-150 cursor-pointer"
+          >
             Add
           </button>
         </div>
 
       </div>
-    </div>
+    </Link>
   );
 };
 

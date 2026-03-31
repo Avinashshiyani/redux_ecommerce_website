@@ -5,6 +5,8 @@ import { setProducts } from "./Store/productSlice";
 import ProductList from "./Components/ProductList";
 import SearchBar from "./Components/SearchBar";
 import FilterDropDown from "./Components/FilterDropDown";
+import { Routes, Route, useLocation } from "react-router-dom";
+import ProductDetail from "./Components/ProductDetail";
 
 const NAV_LINKS = ["Home", "Products", "Orders"];
 
@@ -13,6 +15,8 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     setLoading(true);
@@ -91,12 +95,14 @@ const App = () => {
       </header>
 
       {/* ── Filter Bar ── */}
-      <div className="bg-gradient-to-b from-stone-50 to-amber-50/30 border-b border-stone-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-8 py-4 flex items-center gap-3 flex-wrap">
-          <SearchBar />
-          <FilterDropDown />
+      {isHomePage && (
+        <div className="bg-gradient-to-b from-stone-50 to-amber-50/30 border-b border-stone-200 shadow-sm">
+          <div className="max-w-7xl mx-auto px-8 py-4 flex items-center gap-3 flex-wrap">
+            <SearchBar />
+            <FilterDropDown />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ── Main Content ── */}
       <main className="max-w-7xl mx-auto px-8 py-8">
@@ -121,7 +127,10 @@ const App = () => {
             ))}
           </div>
         ) : (
-          <ProductList />
+          <Routes>
+            <Route path="/" element={<ProductList />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+          </Routes>
         )}
       </main>
     </div>
